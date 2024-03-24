@@ -1,1 +1,1 @@
-console.log("pratham suthar")
+console.log("Hello from node js")
