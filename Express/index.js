@@ -1,46 +1,24 @@
 // Server Log 
 const http = require('http')
 
-const fs = require('fs');
+// const fs = require('fs');
 
-const url = require('url')
+// const url = require('url')
 
-function myHandler(req, res) {
+const express = require('express')
 
-    if (req.url === "/favicon.ico") return res.end();
+const app = express();
 
-    const logServer = `${Date.now()} :${req.method} ${req.url} New Request receive\n`;
+app.get('/', (req, res) => {
+    return res.send("Hello from the Home Page")
+})
 
-    const myURL = url.parse(req.url, true);
+// app.get('/about', (req, res) => {
+//     return res.send("Hello from the About");
+// })
 
-    console.log(myURL);
+app.get('/about', (req, res) => {
+    return res.send("Hello from aboout" + ' Hey ' + req.query.name);
+})
 
-    fs.appendFile("sample.txt", logServer, (err, data) => {
-        switch (myURL.pathname) {
-            case '/':
-                if (req.method === "GET") res.end("HOME PAGE");
-                break
-            case '/about':
-                const username = myURL.query.myname;
-                res.end(`hello ${username}`);
-                break
-
-            case '/content':
-                const mysearch = myURL.query.search_query;
-                res.end("You search the result for " + mysearch);
-                break
-            case "/signup":
-
-                if (req.method === "GET") res.end("This is signup Form,")
-                else if (req.method === "POST ") {
-                    //  DB query 
-                    res.end("sucess..............")
-                }
-            default:
-                res.end("404 PAGE")
-        }
-    })
-}
-const myServer = http.createServer(myHandler);
-
-myServer.listen(3000, () => console.log("Server Started!!!!"))
+app.listen(3000, () => console.log("Server Started!!!!"))

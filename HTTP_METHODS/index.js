@@ -36,7 +36,7 @@ const myServer = http.createServer((req, res) => {
                     //  DB query 
                     res.end("sucess..............")
                 }
-            default:
+            default:      
                 res.end("404 PAGE")
         }
     })
